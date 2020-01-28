@@ -1,12 +1,25 @@
-import React from 'react';
-import { IMovieItem, MovieItem } from '../components/movie-item';
+import React, { useState, useEffect } from 'react';
+// import movies from '../movies/movies.json';
 
-export const MoviesList = (props: IMovieItem[]) => {
+import { MovieItem, IMovieItem } from '../components/movie-item';
+
+function MovieList() {
+    const [movies, setMovie] = useState<IMovieItem[]>([]);
+    useEffect(() => {
+        fetch('https://devlab.website/v1/movies')
+            .then(response => response.json())
+            .then(response => {
+                setMovie(response);
+            })
+            .catch(err => alert('Что то пошло не так, братан ' + err));
+    }, []);
     return (
-        <section className='movie-list'>
-            {Object.keys(props).map((item, index) => {
-                return <MovieItem data={{ ...props[index] }} />;
+        <div className='movie-list'>
+            {movies.map((item, index) => {
+                return <MovieItem movie={item} key={index} />;
             })}
-        </section>
+        </div>
     );
-};
+}
+
+export default MovieList;
