@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { POSTER_PATH } from '../constants';
 
 export interface IMovieItem {
     id: number;
@@ -28,10 +29,13 @@ function MovieItem(props: { movie: IMovieItem }) {
     return (
         <div className='movie-item'>
             <ul>
+                <li className='movie-item__poster'>
+                    <img src={`${POSTER_PATH}/${movie.poster_path}`} alt='' />
+                </li>
                 <li>id: {movie.id}</li>
                 <li>title: {movie.title}</li>
                 <li>imdb id: {movie.imdb_id}</li>
-                <li>overview: {movie.overview}</li>
+                <li>{movie.overview}</li>
                 <li>genres: {movie.genres.join(', ')}</li>
                 <li>revenue: {movie.revenue}</li>
                 <li>duration: {movie.duration}</li>
@@ -39,7 +43,6 @@ function MovieItem(props: { movie: IMovieItem }) {
                 <li>vote average: {movie.vote_average}</li>
                 <li>vote count: {movie.vote_count}</li>
                 <li>director: {movie.director}</li>
-                <li>poster: {movie.poster_path}</li>
                 <li>release date: {movie.release_date}</li>
             </ul>
             <div>
