@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 // import movies from '../movies/movies.json';
-
+import { MOVIES_URL } from '../constants';
 import { MovieItem, IMovieItem } from '../components/movie-item';
 
 function MovieList() {
     const [movies, setMovie] = useState<IMovieItem[]>([]);
     useEffect(() => {
-        fetch('https://devlab.website/v1/movies')
-            .then(response => response.json())
+        fetch(`${MOVIES_URL}/movies`)
+            .then<IMovieItem[]>(response => response.json())
             .then(response => {
                 setMovie(response);
             })
