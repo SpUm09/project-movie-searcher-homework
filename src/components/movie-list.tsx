@@ -1,0 +1,25 @@
+import React, { useState, useEffect } from 'react';
+// import movies from '../movies/movies.json';
+import { MOVIES_URL } from '../constants';
+import { MovieItem, IMovieItem } from '../components/movie-item';
+
+function MovieList() {
+    const [movies, setMovie] = useState<IMovieItem[]>([]);
+    useEffect(() => {
+        fetch(`${MOVIES_URL}/movies`)
+            .then<IMovieItem[]>(response => response.json())
+            .then(response => {
+                setMovie(response);
+            })
+            .catch(err => alert('Что то пошло не так, братан ' + err));
+    }, []);
+    return (
+        <div className='movie-list'>
+            {movies.map((item, index) => {
+                return <MovieItem movie={item} key={index} />;
+            })}
+        </div>
+    );
+}
+
+export default MovieList;
