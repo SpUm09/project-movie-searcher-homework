@@ -1,21 +1,29 @@
+// import React, { useState, useEffect } from 'react';
 import React, { useState, useEffect } from 'react';
 // import movies from '../movies/movies.json';
 import { MOVIES_URL } from '../constants';
-import { MovieItem, IMovieItem } from '../components/movie-item';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { getMovies } from '../reduxSetup/actions';
+
+import { MovieItem } from '../components/movie-item';
 
 function MovieList() {
-    const [movies, setMovie] = useState<IMovieItem[]>([]);
+    const dispatch = useDispatch();
+
+    const moviesList = useSelector((state: { list: [] }) => state.list);
+
     useEffect(() => {
         fetch(`${MOVIES_URL}/movies`)
-            .then<IMovieItem[]>(response => response.json())
+            .then<ListElement[]>(response => response.json())
             .then(response => {
-                setMovie(response);
+                dispatch(getMovies(response));
             })
             .catch(err => alert('Что то пошло не так, братан ' + err));
     }, []);
     return (
         <div className='movie-list'>
-            {movies.map((item, index) => {
+            {moviesList.map((item, index) => {
                 return <MovieItem movie={item} key={index} />;
             })}
         </div>

@@ -1,30 +1,17 @@
 import React, { useState } from 'react';
 import { POSTER_PATH } from '../constants';
+import { useDispatch } from 'react-redux';
+import { addFavorite } from '../reduxSetup/actions';
 
-export interface IMovieItem {
-    id: number;
-    title: string;
-    imdb_id: string;
-    overview: string;
-    genres: string[];
-    revenue: number;
-    duration: number;
-    likes: number;
-    vote_average: number;
-    vote_count: number;
-    director: string;
-    poster_path: string;
-    release_date: string;
-}
-
-function MovieItem(props: { movie: IMovieItem }) {
+function MovieItem(props: { movie: ListElement }) {
     const { movie } = props;
+    // const [favorites, setFavoritesState] = useState(false);
 
-    const [favorites, setFavoritesState] = useState(false);
+    const dispatch = useDispatch();
 
-    function toFavorites() {
-        setFavoritesState(!favorites);
-    }
+    const toFavorites = () => {
+        dispatch(addFavorite(movie.id));
+    };
 
     return (
         <div className='movie-item'>
@@ -45,9 +32,7 @@ function MovieItem(props: { movie: IMovieItem }) {
                 <li>director: {movie.director}</li>
                 <li>release date: {movie.release_date}</li>
             </ul>
-            <div>
-                <button onClick={toFavorites}>{favorites ? `favorites` : `NO favorites`}</button>
-            </div>
+            <button onClick={toFavorites}>{movie.isFav ? `favorites` : `NO favorites`}</button>
         </div>
     );
 }
