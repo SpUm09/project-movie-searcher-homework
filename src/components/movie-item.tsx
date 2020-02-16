@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
-import { POSTER_PATH } from '../constants';
+import React, { useCallback } from 'react';
+import { POSTER_PATH } from '../constants/constants';
 import { useDispatch } from 'react-redux';
 import { addFavorite } from '../reduxSetup/actions';
 
 function MovieItem(props: { movie: ListElement }) {
     const { movie } = props;
-    // const [favorites, setFavoritesState] = useState(false);
 
     const dispatch = useDispatch();
 
-    const toFavorites = () => {
+    const toFavorites = useCallback(() => {
         dispatch(addFavorite(movie.id));
-    };
+    }, [movie.id]);
 
     return (
         <div className='movie-item'>
@@ -32,7 +31,7 @@ function MovieItem(props: { movie: ListElement }) {
                 <li>director: {movie.director}</li>
                 <li>release date: {movie.release_date}</li>
             </ul>
-            <button onClick={toFavorites}>{movie.isFav ? `favorites` : `NO favorites`}</button>
+            <button onClick={toFavorites}>{movie.isFavorite ? `favorites` : `NO favorites`}</button>
         </div>
     );
 }

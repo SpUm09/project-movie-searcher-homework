@@ -1,8 +1,5 @@
-// import React, { useState, useEffect } from 'react';
-import React, { useState, useEffect } from 'react';
-// import movies from '../movies/movies.json';
-import { MOVIES_URL } from '../constants';
-
+import React, { useEffect } from 'react';
+import { MOVIES_URL } from '../constants/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMovies } from '../reduxSetup/actions';
 
@@ -10,7 +7,6 @@ import { MovieItem } from '../components/movie-item';
 
 function MovieList() {
     const dispatch = useDispatch();
-
     const moviesList = useSelector((state: { list: [] }) => state.list);
 
     useEffect(() => {
@@ -20,13 +16,13 @@ function MovieList() {
                 dispatch(getMovies(response));
             })
             .catch(err => alert('Что то пошло не так, братан ' + err));
-    }, []);
+    }, [dispatch]);
     return (
-        <div className='movie-list'>
+        <ul className='movie-list'>
             {moviesList.map((item, index) => {
                 return <MovieItem movie={item} key={index} />;
             })}
-        </div>
+        </ul>
     );
 }
 
