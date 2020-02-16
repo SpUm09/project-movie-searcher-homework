@@ -1,54 +1,25 @@
-import React, { useState } from 'react';
-import { POSTER_PATH } from '../constants';
+import React, { useState, useCallback } from 'react';
+import { POSTER_PATH } from '../constants/constants';
+import { useDispatch } from 'react-redux';
+import { addFavorite } from '../reduxSetup/actions';
 
-export interface IMovieItem {
-    id: number;
-    title: string;
-    imdb_id: string;
-    overview: string;
-    genres: string[];
-    revenue: number;
-    duration: number;
-    likes: number;
-    vote_average: number;
-    vote_count: number;
-    director: string;
-    poster_path: string;
-    release_date: string;
-}
-
-function MovieItem(props: { movie: IMovieItem }) {
+function MovieItem(props: { movie: ListElement }) {
     const { movie } = props;
 
-    const [favorites, setFavoritesState] = useState(false);
+    const dispatch = useDispatch();
 
-    function toFavorites() {
-        setFavoritesState(!favorites);
-    }
+    const toFavorites = useCallback(() => {
+        dispatch(addFavorite(movie.id));
+    }, [addFavorite(movie.id)]);
 
     return (
-        <div className='movie-item'>
-            <ul>
-                <li className='movie-item__poster'>
-                    <img src={`${POSTER_PATH}/${movie.poster_path}`} alt='' />
-                </li>
-                <li>id: {movie.id}</li>
-                <li>title: {movie.title}</li>
-                <li>imdb id: {movie.imdb_id}</li>
-                <li>{movie.overview}</li>
-                <li>genres: {movie.genres.join(', ')}</li>
-                <li>revenue: {movie.revenue}</li>
-                <li>duration: {movie.duration}</li>
-                <li>likes: {movie.likes}</li>
-                <li>vote average: {movie.vote_average}</li>
-                <li>vote count: {movie.vote_count}</li>
-                <li>director: {movie.director}</li>
-                <li>release date: {movie.release_date}</li>
-            </ul>
-            <div>
-                <button onClick={toFavorites}>{favorites ? `favorites` : `NO favorites`}</button>
+        <li className='movie-item'>
+            <div className='movie-item__poster'>
+                <img src={`${POSTER_PATH}/${movie.poster_path}`} alt='' />
             </div>
-        </div>
+            <div className='movie-item__title'>{movie.title}</div>
+            <button onClick={toFavorites}>{movie.isFavorite ? `😍` : `😐`}</button>
+        </li>
     );
 }
 
