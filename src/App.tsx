@@ -1,9 +1,9 @@
 import React from 'react';
-import data from './movies/movies.json';
-import { MoviesList } from './components/movie-list';
+import MovieList from './components/movie-list';
+import './style/style.css';
 
 const App: React.FC = () => {
-    return <MoviesList {...data} />;
+    return <MovieList />;
 };
 
 export default App;
