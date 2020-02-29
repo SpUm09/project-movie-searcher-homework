@@ -1,4 +1,4 @@
-import { LOAD_MOVIES, FAVORITE_ADD, RESET_ALL } from './actionTypes';
+import { LOAD_MOVIES, FAVORITE_ADD, MOVIE_SEARCH, RESET_ALL } from './actionTypes';
 
 export const getMovies = (newElements: ListElement[]) => ({
     type: LOAD_MOVIES,
@@ -10,4 +10,8 @@ export const addFavorite = (id: number) => ({
     payload: id,
 });
 
+export const searchMovies = (title: string) => ({
+    type: MOVIE_SEARCH,
+    payload: title,
+});
 export const resetStore = () => ({ type: RESET_ALL });

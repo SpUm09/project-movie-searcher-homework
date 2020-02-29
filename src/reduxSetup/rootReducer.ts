@@ -1,4 +1,4 @@
-import { LOAD_MOVIES, RESET_ALL, FAVORITE_ADD } from './actionTypes';
+import { LOAD_MOVIES, MOVIE_SEARCH, FAVORITE_ADD, RESET_ALL } from './actionTypes';
 
 const initialState: RootStore = { list: [] };
 
@@ -17,6 +17,17 @@ const actionHanlder = new Map<string, RootReducer>([
                 ...state,
                 list: state.list.map((movie: ListElement) => {
                     return movie.id === action.payload ? { ...movie, isFavorite: !movie.isFavorite } : movie;
+                }),
+            };
+        },
+    ],
+    [
+        MOVIE_SEARCH,
+        (state, action: Action<ActionsT>) => {
+            return {
+                ...state,
+                list: state.list.filter((movie: ListElement) => {
+                    return movie.title.toUpperCase().includes(action.payload.toUpperCase());
                 }),
             };
         },

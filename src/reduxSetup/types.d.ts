@@ -19,6 +19,6 @@ type RootStore = { list: ListElement[] };
 
 type Action<T> = { type: string; payload: T };
 
-type ActionsT = typeof GET_MOVIES | typeof FAVORITE_ADD | 'DEFAULT';
+type ActionsT = typeof GET_MOVIES | typeof FAVORITE_ADD | typeof MOVIE_SEARCH | 'DEFAULT';
 
 type RootReducer<T = ActionsT> = (state: RootStore, action: Action<T>) => RootStore;

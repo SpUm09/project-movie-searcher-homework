@@ -3,7 +3,7 @@ import { MOVIES_URL } from '../constants/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMovies } from '../reduxSetup/actions';
 
-import { MovieItem } from '../components/movie-item';
+import { MovieItem } from './movie-item';
 
 function MovieList() {
     const dispatch = useDispatch();
@@ -16,7 +16,7 @@ function MovieList() {
                 dispatch(getMovies(response));
             })
             .catch(err => alert('Что то пошло не так, братан ' + err));
-    }, [dispatch]);
+    }, []);
     return (
         <ul className='movie-list'>
             {moviesList.map((item, index) => {
